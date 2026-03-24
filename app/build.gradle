@@ -1,0 +1,26 @@
+// App-level build config for LinkToGmail.
+// No external dependencies needed — only Android framework APIs used.
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'business.aautomations.linktogmail'
+    compileSdk 34
+    defaultConfig {
+        applicationId "business.aautomations.linktogmail"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // No external dependencies — app only uses android.net.Uri and android.content.Intent
+}

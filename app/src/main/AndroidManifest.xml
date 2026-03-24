@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    AndroidManifest.xml for LinkToGmail.
+    Declares a single share-target activity that handles text/plain and text/html
+    intent shares from any app and forwards them to Gmail compose.
+    No launcher icon, no permissions — purely a share handler.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:label="Send to Gmail"
+        android:theme="@android:style/Theme.NoDisplay">
+
+        <!--
+            ShareActivity: the only entry point.
+            exported=true is required so other apps can invoke it via the share sheet.
+            Theme.NoDisplay ensures no visible window flashes before Gmail opens.
+        -->
+        <activity
+            android:name=".ShareActivity"
+            android:label="Send to Gmail"
+            android:exported="true"
+            android:theme="@android:style/Theme.NoDisplay">
+
+            <!-- Handle plain text shares (URLs, WhatsApp messages, etc.) -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <!-- Handle HTML text shares -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/html" />
+            </intent-filter>
+
+        </activity>
+    </application>
+
+</manifest>
