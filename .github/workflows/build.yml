@@ -23,30 +23,24 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3. Install Android SDK command-line tools
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      # 3. Set up Gradle
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.3'
 
-      # 4. Generate the Gradle wrapper jar (not committed to the repo)
-      - name: Install Gradle wrapper jar
-        run: gradle wrapper --gradle-version 8.3
-
-      # 5. Ensure the wrapper script is executable on Linux
-      - name: Make gradlew executable
-        run: chmod +x gradlew
-
-      # 6. Build the release APK (unsigned — no keystore needed for sideloading)
+      # 4. Build the release APK
       - name: Build Release APK
-        run: ./gradlew assembleRelease
+        run: gradle assembleRelease
+        working-directory: .
 
-      # 7. Upload the APK so it can be downloaded from the Actions run page
+      # 5. Upload APK as artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: LinkToGmail-APK
           path: app/build/outputs/apk/release/app-release-unsigned.apk
 
-      # 8. Create a versioned GitHub Release so each build gets a permanent download URL
+      # 6. Create GitHub Release
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
